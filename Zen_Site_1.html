@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenChain - Sustainable Blockchain Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-light: #e8f5e9;
+            --primary: #2ceaa3;
+            --primary-dark: #1b5e20;
+            --secondary: #c2f147;
+            --accent: #f9f128;
+            --text-dark: #263238;
+            --text-light: #f5f5f5;
+            --gradient: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 10px 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .cta-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(44, 234, 163, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(44, 234, 163, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-button:hover {
+            background: rgba(44, 234, 163, 0.1);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            width: 50%;
+            max-width: 700px;
+            height: auto;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #blockchain-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 5%;
+            background-color: white;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            z-index: 2;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 5%;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 30px;
+            position: relative;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-item:last-child::after {
+            display: none;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 100px 5%;
+            background-color: white;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            flex-grow: 1;
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .step-content p {
+            color: var(--text-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+            z-index: 0;
+        }
+
+        /* Tokenomics Section */
+        .tokenomics {
+            padding: 100px 5%;
+            background-color: var(--primary-light);
+        }
+
+        .tokenomics-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tokenomics-content {
+            flex: 1;
+        }
+
+        .tokenomics-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .pie-chart {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .chart-segment {
+            opacity: 0;
+            transform-origin: center;
+            transform: scale(0);
+            transition: all 0.5s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .chart-segment:hover {
+            filter: brightness(1.1);
+            transform: scale(1.05) !important;
+        }
+
+        .tokenomics-image.in-view .chart-segment {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .tokenomics-image.in-view .chart-segment:nth-child(1) { transition-delay: 0.1s; }
+        .tokenomics-image.in-view .chart-segment:nth-child(2) { transition-delay: 0.3s; }
+        .tokenomics-image.in-view .chart-segment:nth-child(3) { transition-delay: 0.5s; }
+        .tokenomics-image.in-view .chart-segment:nth-child(4) { transition-delay: 0.7s; }
+        .tokenomics-image.in-view .chart-segment:nth-child(5) { transition-delay: 0.9s; }
+
+        .distribution-list {
+            margin-top: 30px;
+        }
+
+        .distribution-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .distribution-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 100px 5%;
+            background-color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .member-info {
+            padding: 25px;
+        }
+
+        .member-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--primary-dark);
+        }
+
+        .member-info p {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Roadmap Section */
+        .roadmap {
+            padding: 100px 5%;
+            background-color: var(--primary-light);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background: var(--gradient);
+            border: 4px solid white;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .timeline-content p {
+            color: var(--text-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 80px 5%;
+            background-color: white;
+        }
+
+        .partners-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .partner-logo {
+            height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 5%;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-section .secondary-button {
+            color: white;
+            border-color: white;
+        }
+
+        .cta-section .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-newsletter input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: none;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .footer-newsletter input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .tokenomics-container {
+                flex-direction: column;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 60px;
+                height: auto;
+                padding-bottom: 60px;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                position: relative;
+                right: auto;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .stat-item::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .cta-buttons .cta-button,
+            .cta-buttons .secondary-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="logo-container">
+            <svg class="logo" width="92" height="38" viewBox="0 0 92 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M43.1846 0.5C36.7605 3.89325 29.4456 5.81331 21.6846 5.81331C13.9235 5.81331 6.60866 3.89325 0.18457 0.5V4.13129C0.18457 5.01432 0.691291 5.82184 1.49743 6.17293C3.1682 6.90083 4.88549 7.54104 6.64362 8.08798H2.44773V9.22532C2.44773 10.4815 3.46094 11.5 4.71089 11.5H38.6583C39.9082 11.5 40.9214 10.4815 40.9214 9.22532V8.08798H36.7255C38.4837 7.54104 40.2009 6.90083 41.8717 6.17293C42.6779 5.82184 43.1846 5.01432 43.1846 4.13129V0.5Z" fill="url(#paint0_linear_6224_18368)" />
+                <path d="M36.6846 15.7857C36.6846 14.5233 35.6514 13.5 34.3769 13.5H8.99226C7.71772 13.5 6.68457 14.5233 6.68457 15.7857V35.2143C6.68457 36.4767 7.71772 37.5 8.99226 37.5H12.4538V20.3571C12.4538 19.7259 12.9704 19.2143 13.6076 19.2143H29.7615C30.3988 19.2143 30.9153 19.7259 30.9153 20.3571V37.5H34.3769C35.6514 37.5 36.6846 36.4767 36.6846 35.2143V15.7857Z" fill="url(#paint1_linear_6224_18368)" />
+                <path d="M78.1808 9H80.4314V26.314C80.4314 26.6224 80.1795 26.8725 79.8688 26.8725H78.1808V9Z" fill="#111111" />
+                <path d="M75.8739 9V10.6755C75.8739 10.984 75.6219 11.2341 75.3112 11.2341H63.4953V9H75.8739Z" fill="#111111" />
+                <path d="M75.3112 24.6388C75.6219 24.6388 75.8739 24.8889 75.8739 25.1973V26.8728H63.4953V24.6388H75.3112Z" fill="#111111" />
+                <path d="M75.8736 18.9973V16.7632H63.495V18.9973H75.8736Z" fill="#111111" />
+                <path d="M91.6846 9H89.4339V22.6846L81.5566 9.59437V13.6801L89.4339 26.8725C89.9966 26.8725 90.5592 26.8725 91.1219 26.8725C91.4326 26.8725 91.6846 26.6224 91.6846 26.314C91.6846 20.5426 91.6846 14.7714 91.6846 9Z" fill="#111111" />
+                <path d="M86.4313 36.9001L87.3033 31.507H88.1864L88.0299 32.428C88.2312 32.1025 88.4958 31.8509 88.8237 31.6734C89.1591 31.4958 89.5466 31.4071 89.9864 31.4071C90.59 31.4071 91.0446 31.5883 91.3502 31.9509C91.6632 32.3134 91.7564 32.8756 91.6297 33.6376L91.1154 36.9001H90.2099L90.7242 33.6376C90.8881 32.6389 90.5528 32.1395 89.718 32.1395C89.174 32.1395 88.7417 32.3059 88.4212 32.6389C88.1008 32.9718 87.8958 33.4157 87.8064 33.9705L87.3368 36.9001H86.4313Z" fill="#111111" />
+                <path d="M80.1217 30.1649L80.2782 29.1551H81.3961L81.2285 30.1649H80.1217ZM79.1379 36.9007L79.9987 31.5076H80.9043L80.0435 36.9007H79.1379Z" fill="#111111" />
+                <path d="M69.7631 37C69.4501 37 69.1557 36.9297 68.88 36.7891C68.6117 36.6486 68.3955 36.4562 68.2316 36.212C68.0676 35.968 67.9856 35.6905 67.9856 35.3799C67.9856 34.8102 68.2278 34.3996 68.7123 34.148C69.2042 33.8966 69.9867 33.7708 71.06 33.7708H71.8314L71.8872 33.4379C71.9618 33.0161 71.9059 32.6944 71.7195 32.4725C71.5332 32.2431 71.2052 32.1284 70.7357 32.1284C70.0724 32.1284 69.4576 32.3171 68.8911 32.6944L68.634 32.0396C68.9024 31.8472 69.234 31.6957 69.629 31.5846C70.0314 31.4663 70.4339 31.4071 70.8364 31.4071C71.5965 31.4071 72.1295 31.6142 72.435 32.0285C72.7405 32.4428 72.8374 32.994 72.7257 33.682L72.2114 36.9001H71.3506L71.4848 36.0568C71.2984 36.3748 71.0487 36.6116 70.7357 36.767C70.4227 36.9223 70.0985 37 69.7631 37ZM69.9867 36.3231C70.3891 36.3231 70.7506 36.1899 71.0711 35.9235C71.3916 35.6498 71.5928 35.2725 71.6748 34.7916L71.7419 34.3589H71.183C70.609 34.3589 70.1544 34.3885 69.8191 34.4477C69.4911 34.5069 69.2563 34.6068 69.1147 34.7473C68.9731 34.8878 68.9024 35.0802 68.9024 35.3243C68.9024 35.6498 69.0104 35.8977 69.2266 36.0678C69.4426 36.238 69.6961 36.3231 69.9867 36.3231Z" fill="#111111" />
+                <path d="M57.4651 36.9001L58.7173 29.0768H59.6227L59.0973 32.3838C59.2985 32.073 59.5632 31.8326 59.8911 31.6624C60.219 31.4923 60.5953 31.4071 61.0201 31.4071C61.6239 31.4071 62.0785 31.5884 62.384 31.9509C62.6971 32.3135 62.7903 32.8757 62.6636 33.6377L62.1493 36.9001H61.2437L61.758 33.6377C61.922 32.639 61.5866 32.1396 60.7518 32.1396C60.2077 32.1396 59.7755 32.306 59.455 32.639C59.1345 32.9719 58.9296 33.4158 58.8401 33.9706L58.3707 36.9001H57.4651Z" fill="#111111" />
+                <path d="M50.0658 37C49.2608 37 48.6609 36.778 48.2659 36.3341C47.8784 35.8902 47.6846 35.3133 47.6846 34.6031C47.6846 34.2035 47.7405 33.8151 47.8522 33.4379C47.9641 33.0606 48.1392 32.7202 48.3777 32.4169C48.6162 32.1062 48.918 31.8621 49.2832 31.6845C49.6484 31.4996 50.0844 31.4071 50.5912 31.4071C50.9489 31.4071 51.2918 31.4663 51.6197 31.5846C51.9477 31.703 52.2085 31.8621 52.4023 32.0618L52.0781 32.7055C51.6979 32.3281 51.2135 32.1395 50.6247 32.1395C50.1403 32.1395 49.749 32.2616 49.4509 32.5057C49.1602 32.7424 48.9479 33.0494 48.8137 33.4267C48.6796 33.8041 48.6125 34.1925 48.6125 34.5919C48.6125 35.095 48.7317 35.5018 48.9701 35.8126C49.2161 36.1159 49.6186 36.2676 50.1776 36.2676C50.4011 36.2676 50.6397 36.2232 50.8931 36.1344C51.1464 36.0382 51.3813 35.894 51.5973 35.7017L51.8656 36.3674C51.6496 36.5671 51.3737 36.7225 51.0384 36.8336C50.7105 36.9445 50.3863 37 50.0658 37Z" fill="#111111" />
+                <path d="M47.6846 9H61.1885V11.2341H48.2472C47.9365 11.2341 47.6846 10.984 47.6846 10.6755V9Z" fill="#111111" />
+                <path d="M50.5562 24.6382H61.1885V26.3137C61.1885 26.6221 60.9366 26.8722 60.6258 26.8722H47.6846V24.6382H47.6897L57.4531 12.3508H60.3195L50.5562 24.6382Z" fill="#111111" />
+                <defs>
+                    <linearGradient id="paint0_linear_6224_18368" x1="0.184571" y1="19" x2="43.1846" y2="19" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#F9F128" />
+                        <stop offset="0.5" stop-color="#C2F147" />
+                        <stop offset="1" stop-color="#2CEAA3" />
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_6224_18368" x1="0.184571" y1="19" x2="43.1846" y2="19" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#F9F128" />
+                        <stop offset="0.5" stop-color="#C2F147" />
+                        <stop offset="1" stop-color="#2CEAA3" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">ZenChain</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#partners">Partners</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">Launch App</button>
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <!-- Hero Section with Blockchain Visualization -->
+    <section class="hero">
+        <canvas id="blockchain-canvas"></canvas>
+        <div class="hero-content fade-in">
+            <h1>Building a Sustainable Blockchain Future</h1>
+            <p>ZenChain is a next-generation blockchain platform designed for sustainability, scalability, and real-world adoption with minimal environmental impact.</p>
+            <div class="hero-buttons">
+                <button class="cta-button">Get Started</button>
+                <button class="secondary-button">Learn More</button>
+            </div>
+        </div>
+        <img src="https://via.placeholder.com/700x500/2ceaa3/ffffff?text=ZenChain" alt="ZenChain Blockchain Visualization" class="hero-image fade-in delay-1">
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title fade-in">
+            <h2>Why Choose ZenChain?</h2>
+            <p>Our platform offers unique advantages that set us apart from traditional blockchain solutions</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Energy Efficient</h3>
+                <p>Our innovative consensus mechanism uses 99% less energy than traditional proof-of-work blockchains, making ZenChain the sustainable choice.</p>
+            </div>
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>High Performance</h3>
+                <p>With throughput of 10,000+ transactions per second and sub-second finality, ZenChain is built for real-world adoption.</p>
+            </div>
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Secure by Design</h3>
+                <p>Military-grade encryption and formal verification ensure your assets and data are protected against all known threats.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Carbon Negative</h3>
+                <p>We don't just reduce environmental impact - we actively remove CO₂ from the atmosphere through our sustainability initiatives.</p>
+            </div>
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>Developer Friendly</h3>
+                <p>Comprehensive SDKs, documentation, and tooling make building on ZenChain a pleasure for developers of all skill levels.</p>
+            </div>
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Low Cost</h3>
+                <p>Transaction fees are a fraction of a cent, enabling microtransactions and making blockchain accessible to everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item fade-in">
+                <h3>10K+</h3>
+                <p>Transactions per Second</p>
+            </div>
+            <div class="stat-item fade-in delay-1">
+                <h3>99%</h3>
+                <p>Energy Savings</p>
+            </div>
+            <div class="stat-item fade-in delay-2">
+                <h3>50+</h3>
+                <p>Enterprise Partners</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3>1M+</h3>
+                <p>Community Members</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="section-title fade-in">
+            <h2>How ZenChain Works</h2>
+            <p>Our innovative technology stack delivers unmatched performance and sustainability</p>
+        </div>
+        <div class="steps-container">
+            <div class="step fade-in">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Green Proof of Stake</h3>
+                    <p>Our modified Proof of Stake consensus mechanism eliminates energy waste while maintaining security and decentralization. Validators are selected based on their stake and environmental contribution.</p>
+                </div>
+            </div>
+            <div class="step fade-in delay-1">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Sharded Architecture</h3>
+                    <p>ZenChain uses horizontal scaling through sharding, allowing the network to process transactions in parallel across multiple chains while maintaining atomic composability.</p>
+                </div>
+            </div>
+            <div class="step fade-in delay-2">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Optimized Virtual Machine</h3>
+                    <p>The Zen Virtual Machine (ZVM) executes smart contracts with unprecedented efficiency, reducing computational overhead and energy consumption by up to 80%.</p>
+                </div>
+            </div>
+            <div class="step fade-in">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Carbon Offset Protocol</h3>
+                    <p>A portion of all transaction fees is automatically allocated to verified carbon offset projects, making every transaction on ZenChain carbon negative.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section with Animated Pie Chart -->
+    <section class="tokenomics" id="tokenomics">
+        <div class="section-title fade-in">
+            <h2>Tokenomics</h2>
+            <p>Designed for long-term sustainability and ecosystem growth</p>
+        </div>
+        <div class="tokenomics-container">
+            <div class="tokenomics-content fade-in">
+                <h3>ZEN Token Distribution</h3>
+                <p>The ZEN token powers the ZenChain ecosystem, serving as the medium of exchange, governance mechanism, and staking asset.</p>
+                <div class="distribution-list">
+                    <div class="distribution-item">
+                        <div class="distribution-color" style="background: #2CEAA3;"></div>
+                        <span>40% - Community & Ecosystem</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-color" style="background: #1B5E20;"></div>
+                        <span>25% - Staking Rewards</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-color" style="background: #C2F147;"></div>
+                        <span>15% - Team & Advisors</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-color" style="background: #F9F128;"></div>
+                        <span>10% - Private Sale</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-color" style="background: #E8F5E9;"></div>
+                        <span>10% - Foundation Reserve</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tokenomics-image">
+                <svg class="pie-chart" viewBox="0 0 200 200">
+                    <path class="chart-segment" data-percent="40" data-color="#2CEAA3" d="M100,100 L100,0 A100,100 0 0,1 180,50 Z" fill="#2CEAA3">
+                        <title>Community & Ecosystem (40%)</title>
+                    </path>
+                    <path class="chart-segment" data-percent="25" data-color="#1B5E20" d="M100,100 L180,50 A100,100 0 0,1 200,100 Z" fill="#1B5E20">
+                        <title>Staking Rewards (25%)</title>
+                    </path>
+                    <path class="chart-segment" data-percent="15" data-color="#C2F147" d="M100,100 L200,100 A100,100 0 0,1 170,170 Z" fill="#C2F147">
+                        <title>Team & Advisors (15%)</title>
+                    </path>
+                    <path class="chart-segment" data-percent="10" data-color="#F9F128" d="M100,100 L170,170 A100,100 0 0,1 100,200 Z" fill="#F9F128">
+                        <title>Private Sale (10%)</title>
+                    </path>
+                    <path class="chart-segment" data-percent="10" data-color="#E8F5E9" d="M100,100 L100,200 A100,100 0 0,1 0,100 Z" fill="#E8F5E9">
+                        <title>Foundation Reserve (10%)</title>
+                    </path>
+                    
+                    <circle cx="100" cy="100" r="30" fill="white" />
+                    <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="#1B5E20">ZEN</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="section-title fade-in">
+            <h2>Our Team</h2>
+            <p>Industry veterans and blockchain pioneers building the future</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-member fade-in">
+                <img src="https://via.placeholder.com/300x300/2ceaa3/ffffff?text=Alex+Chen" alt="Alex Chen" class="member-image">
+                <div class="member-info">
+                    <h3>Alex Chen</h3>
+                    <p>Founder & CEO</p>
+                    <p>Former lead architect at Ethereum, 10+ years in blockchain development</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member fade-in delay-1">
+                <img src="https://via.placeholder.com/300x300/2ceaa3/ffffff?text=Sarah+Johnson" alt="Sarah Johnson" class="member-image">
+                <div class="member-info">
+                    <h3>Sarah Johnson</h3>
+                    <p>CTO</p>
+                    <p>Distributed systems expert, former Google engineer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member fade-in delay-2">
+                <img src="https://via.placeholder.com/300x300/2ceaa3/ffffff?text=Michael+Rodriguez" alt="Michael Rodriguez" class="member-image">
+                <div class="member-info">
+                    <h3>Michael Rodriguez</h3>
+                    <p>Head of Research</p>
+                    <p>PhD in Cryptography, authored 20+ blockchain research papers</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <img src="https://via.placeholder.com/300x300/2ceaa3/ffffff?text=Emily+Park" alt="Emily Park" class="member-image">
+                <div class="member-info">
+                    <h3>Emily Park</h3>
+                    <p>Sustainability Lead</p>
+                    <p>Environmental scientist with focus on blockchain impact</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="section-title fade-in">
+            <h2>Roadmap</h2>
+            <p>Our journey to build the most sustainable blockchain platform</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item left fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-date">Q3 2022</div>
+                    <h3>Concept Development</h3>
+                    <p>Initial research and whitepaper published. Core team assembled.</p>
+                </div>
+            </div>
+            <div class="timeline-item right fade-in delay-1">
+                <div class="timeline-content">
+                    <div class="timeline-date">Q1 2023</div>
+                    <h3>Testnet Launch</h3>
+                    <p>First public testnet release with basic functionality.</p>
+                </div>
+            </div>
+            <div class="timeline-item left fade-in delay-2">
+                <div class="timeline-content">
+                    <div class="timeline-date">Q3 2023</div>
+                    <h3>Ecosystem Grants</h3>
+                    <p>$10M developer grant program launched to bootstrap ecosystem.</p>
+                </div>
+            </div>
+            <div class="timeline-item right fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-date">Q1 2024</div>
+                    <h3>Mainnet Beta</h3>
+                    <p>Mainnet launch with limited functionality and early partners.</p>
+                </div>
+            </div>
+            <div class="timeline-item left fade-in delay-1">
+                <div class="timeline-content">
+                    <div class="timeline-date">Q3 2024</div>
+                    <h3>Full Mainnet</h3>
+                    <p>Complete feature set including sharding and carbon protocol.</p>
+                </div>
+            </div>
+            <div class="timeline-item right fade-in delay-2">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025+</div>
+                    <h3>Global Adoption</h3>
+                    <p>Enterprise adoption and expansion of sustainability initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners" id="partners">
+        <div class="section-title fade-in">
+            <h2>Our Partners</h2>
+            <p>Trusted by industry leaders and sustainability pioneers</p>
+        </div>
+        <div class="partners-grid">
+            <img src="https://via.placeholder.com/150x60/ffffff/2ceaa3?text=Partner+1" alt="Partner 1" class="partner-logo fade-in">
+            <img src="https://via.placeholder.com/150x60/ffffff/2ceaa3?text=Partner+2" alt="Partner 2" class="partner-logo fade-in delay-1">
+            <img src="https://via.placeholder.com/150x60/ffffff/2ceaa3?text=Partner+3" alt="Partner 3" class="partner-logo fade-in delay-2">
+            <img src="https://via.placeholder.com/150x60/ffffff/2ceaa3?text=Partner+4" alt="Partner 4" class="partner-logo fade-in">
+            <img src="https://via.placeholder.com/150x60/ffffff/2ceaa3?text=Partner+5" alt="Partner 5" class="partner-logo fade-in delay-1">
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="section-title fade-in">
+            <h2>Ready to Join the Green Blockchain Revolution?</h2>
+            <p>Be part of the movement building a sustainable future for decentralized technology</p>
+        </div>
+        <div class="cta-buttons">
+            <button class="cta-button">Get Started</button>
+            <button class="secondary-button">Read Documentation</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <svg class="footer-logo" width="92" height="38" viewBox="0 0 92 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M43.1846 0.5C36.7605 3.89325 29.4456 5.81331 21.6846 5.81331C13.9235 5.81331 6.60866 3.89325 0.18457 0.5V4.13129C0.18457 5.01432 0.691291 5.82184 1.49743 6.17293C3.1682 6.90083 4.88549 7.54104 6.64362 8.08798H2.44773V9.22532C2.44773 10.4815 3.46094 11.5 4.71089 11.5H38.6583C39.9082 11.5 40.9214 10.4815 40.9214 9.22532V8.08798H36.7255C38.4837 7.54104 40.2009 6.90083 41.8717 6.17293C42.6779 5.82184 43.1846 5.01432 43.1846 4.13129V0.5Z" fill="url(#paint0_linear_6224_18368)" />
+                    <path d="M36.6846 15.7857C36.6846 14.5233 35.6514 13.5 34.3769 13.5H8.99226C7.71772 13.5 6.68457 14.5233 6.68457 15.7857V35.2143C6.68457 36.4767 7.71772 37.5 8.99226 37.5H12.4538V20.3571C12.4538 19.7259 12.9704 19.2143 13.6076 19.2143H29.7615C30.3988 19.2143 30.9153 19.7259 30.9153 20.3571V37.5H34.3769C35.6514 37.5 36.6846 36.4767 36.6846 35.2143V15.7857Z" fill="url(#paint1_linear_6224_18368)" />
+                    <path d="M78.1808 9H80.4314V26.314C80.4314 26.6224 80.1795 26.8725 79.8688 26.8725H78.1808V9Z" fill="#ffffff" />
+                    <path d="M75.8739 9V10.6755C75.8739 10.984 75.6219 11.2341 75.3112 11.2341H63.4953V9H75.8739Z" fill="#ffffff" />
+                    <path d="M75.3112 24.6388C75.6219 24.6388 75.8739 24.8889 75.8739 25.1973V26.8728H63.4953V24.6388H75.3112Z" fill="#ffffff" />
+                    <path d="M75.8736 18.9973V16.7632H63.495V18.9973H75.8736Z" fill="#ffffff" />
+                    <path d="M91.6846 9H89.4339V22.6846L81.5566 9.59437V13.6801L89.4339 26.8725C89.9966 26.8725 90.5592 26.8725 91.1219 26.8725C91.4326 26.8725 91.6846 26.6224 91.6846 26.314C91.6846 20.5426 91.6846 14.7714 91.6846 9Z" fill="#ffffff" />
+                    <path d="M86.4313 36.9001L87.3033 31.507H88.1864L88.0299 32.428C88.2312 32.1025 88.4958 31.8509 88.8237 31.6734C89.1591 31.4958 89.5466 31.4071 89.9864 31.4071C90.59 31.4071 91.0446 31.5883 91.3502 31.9509C91.6632 32.3134 91.7564 32.8756 91.6297 33.6376L91.1154 36.9001H90.2099L90.7242 33.6376C90.8881 32.6389 90.5528 32.1395 89.718 32.1395C89.174 32.1395 88.7417 32.3059 88.4212 32.6389C88.1008 32.9718 87.8958 33.4157 87.8064 33.9705L87.3368 36.9001H86.4313Z" fill="#ffffff" />
+                    <path d="M80.1217 30.1649L80.2782 29.1551H81.3961L81.2285 30.1649H80.1217ZM79.1379 36.9007L79.9987 31.5076H80.9043L80.0435 36.9007H79.1379Z" fill="#ffffff" />
+                    <path d="M69.7631 37C69.4501 37 69.1557 36.9297 68.88 36.7891C68.6117 36.6486 68.3955 36.4562 68.2316 36.212C68.0676 35.968 67.9856 35.6905 67.9856 35.3799C67.9856 34.8102 68.2278 34.3996 68.7123 34.148C69.2042 33.8966 69.9867 33.7708 71.06 33.7708H71.8314L71.8872 33.4379C71.9618 33.0161 71.9059 32.6944 71.7195 32.4725C71.5332 32.2431 71.2052 32.1284 70.7357 32.1284C70.0724 32.1284 69.4576 32.3171 68.8911 32.6944L68.634 32.0396C68.9024 31.8472 69.234 31.6957 69.629 31.5846C70.0314 31.4663 70.4339 31.4071 70.8364 31.4071C71.5965 31.4071 72.1295 31.6142 72.435 32.0285C72.7405 32.4428 72.8374 32.994 72.7257 33.682L72.2114 36.9001H71.3506L71.4848 36.0568C71.2984 36.3748 71.0487 36.6116 70.7357 36.767C70.4227 36.9223 70.0985 37 69.7631 37ZM69.9867 36.3231C70.3891 36.3231 70.7506 36.1899 71.0711 35.9235C71.3916 35.6498 71.5928 35.2725 71.6748 34.7916L71.7419 34.3589H71.183C70.609 34.3589 70.1544 34.3885 69.8191 34.4477C69.4911 34.5069 69.2563 34.6068 69.1147 34.7473C68.9731 34.8878 68.9024 35.0802 68.9024 35.3243C68.9024 35.6498 69.0104 35.8977 69.2266 36.0678C69.4426 36.238 69.6961 36.3231 69.9867 36.3231Z" fill="#ffffff" />
+                    <path d="M57.4651 36.9001L58.7173 29.0768H59.6227L59.0973 32.3838C59.2985 32.073 59.5632 31.8326 59.8911 31.6624C60.219 31.4923 60.5953 31.4071 61.0201 31.4071C61.6239 31.4071 62.0785 31.5884 62.384 31.9509C62.6971 32.3135 62.7903 32.8757 62.6636 33.6377L62.1493 36.9001H61.2437L61.758 33.6377C61.922 32.639 61.5866 32.1396 60.7518 32.1396C60.2077 32.1396 59.7755 32.306 59.455 32.639C59.1345 32.9719 58.9296 33.4158 58.8401 33.9706L58.3707 36.9001H57.4651Z" fill="#ffffff" />
+                    <path d="M50.0658 37C49.2608 37 48.6609 36.778 48.2659 36.3341C47.8784 35.8902 47.6846 35.3133 47.6846 34.6031C47.6846 34.2035 47.7405 33.8151 47.8522 33.4379C47.9641 33.0606 48.1392 32.7202 48.3777 32.4169C48.6162 32.1062 48.918 31.8621 49.2832 31.6845C49.6484 31.4996 50.0844 31.4071 50.5912 31.4071C50.9489 31.4071 51.2918 31.4663 51.6197 31.5846C51.9477 31.703 52.2085 31.8621 52.4023 32.0618L52.0781 32.7055C51.6979 32.3281 51.2135 32.1395 50.6247 32.1395C50.1403 32.1395 49.749 32.2616 49.4509 32.5057C49.1602 32.7424 48.9479 33.0494 48.8137 33.4267C48.6796 33.8041 48.6125 34.1925 48.6125 34.5919C48.6125 35.095 48.7317 35.5018 48.9701 35.8126C49.2161 36.1159 49.6186 36.2676 50.1776 36.2676C50.4011 36.2676 50.6397 36.2232 50.8931 36.1344C51.1464 36.0382 51.3813 35.894 51.5973 35.7017L51.8656 36.3674C51.6496 36.5671 51.3737 36.7225 51.0384 36.8336C50.7105 36.9445 50.3863 37 50.0658 37Z" fill="#ffffff" />
+                    <path d="M47.6846 9H61.1885V11.2341H48.2472C47.9365 11.2341 47.6846 10.984 47.6846 10.6755V9Z" fill="#ffffff" />
+                    <path d="M50.5562 24.6382H61.1885V26.3137C61.1885 26.6221 60.9366 26.8722 60.6258 26.8722H47.6846V24.6382H47.6897L57.4531 12.3508H60.3195L50.5562 24.6382Z" fill="#ffffff" />
+                    <defs>
+                        <linearGradient id="paint0_linear_6224_18368" x1="0.184571" y1="19" x2="43.1846" y2="19" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#F9F128" />
+                            <stop offset="0.5" stop-color="#C2F147" />
+                            <stop offset="1" stop-color="#2CEAA3" />
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_6224_18368" x1="0.184571" y1="19" x2="43.1846" y2="19" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#F9F128" />
+                            <stop offset="0.5" stop-color="#C2F147" />
+                            <stop offset="1" stop-color="#2CEAA3" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <p>ZenChain is building the most sustainable blockchain platform for the future of decentralized applications and finance.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-medium"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Wallet</a></li>
+                    <li><a href="#">Explorer</a></li>
+                    <li><a href="#">Bridge</a></li>
+                    <li><a href="#">Staking</a></li>
+                    <li><a href="#">Governance</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Developers</h3>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">SDKs</a></li>
+                    <li><a href="#">Testnet</a></li>
+                    <li><a href="#">Bug Bounty</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Forum</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Grants</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Stay Updated</h3>
+                <input type="email" placeholder="Your email address">
+                <button class="cta-button">Subscribe</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 ZenChain. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Blockchain Visualization Animation
+        function initBlockchainVisualization() {
+            const canvas = document.getElementById('blockchain-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Block settings
+            const blocks = [];
+            const blockCount = 30;
+            const maxConnections = 3;
+
+            // Create blocks
+            for (let i = 0; i < blockCount; i++) {
+                blocks.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 10 + 5,
+                    speed: Math.random() * 0.5 + 0.1,
+                    color: `rgba(44, 234, 163, ${Math.random() * 0.3 + 0.1})`,
+                    connections: []
+                });
+            }
+
+            // Create connections between blocks
+            blocks.forEach(block => {
+                for (let i = 0; i < maxConnections; i++) {
+                    const randomBlock = blocks[Math.floor(Math.random() * blocks.length)];
+                    if (randomBlock !== block && !block.connections.includes(randomBlock)) {
+                        block.connections.push(randomBlock);
+                    }
+                }
+            });
+
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw connections
+                ctx.strokeStyle = 'rgba(194, 241, 71, 0.2)';
+                ctx.lineWidth = 1;
+                blocks.forEach(block => {
+                    block.connections.forEach(connectedBlock => {
+                        ctx.beginPath();
+                        ctx.moveTo(block.x, block.y);
+                        ctx.lineTo(connectedBlock.x, connectedBlock.y);
+                        ctx.stroke();
+                    });
+                });
+
+                // Draw blocks
+                blocks.forEach(block => {
+                    // Update position
+                    block.y -= block.speed;
+                    if (block.y < -block.size) {
+                        block.y = canvas.height + block.size;
+                        block.x = Math.random() * canvas.width;
+                    }
+
+                    // Draw block
+                    ctx.fillStyle = block.color;
+                    ctx.fillRect(block.x - block.size/2, block.y - block.size/2, block.size, block.size);
+                    
+                    // Add glow effect
+                    ctx.shadowColor = block.color;
+                    ctx.shadowBlur = 10;
+                    ctx.fillRect(block.x - block.size/2, block.y - block.size/2, block.size, block.size);
+                    ctx.shadowBlur = 0;
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        // Pie Chart Animation
+        function initPieChartAnimation() {
+            const tokenomicsSection = document.querySelector('.tokenomics-image');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(tokenomicsSection);
+        }
+
+        // Intersection Observer for scroll animations
+        function setupIntersectionObserver() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+                // Set initial state
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initBlockchainVisualization();
+            initPieChartAnimation();
+            setupIntersectionObserver();
+        });
+    </script>
+</body>
+</html>
